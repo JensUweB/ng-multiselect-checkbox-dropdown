@@ -1,0 +1,11 @@
+<hello name="{{ name }}"></hello>
+
+<app-multi-select-dropdown
+  [data]="list"
+  [dataKey]="'id'"
+  [labelKey]="'name'"
+  [maxSelection]="3"
+  (shareCheckedList)="shareCheckedList($event)"
+  (shareIndividualCheckedList)="shareIndividualCheckedList($event)"
+>
+</app-multi-select-dropdown>

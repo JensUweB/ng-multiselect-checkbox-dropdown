@@ -1,0 +1,22 @@
+<div>
+  <div (mouseleave)="showDropDown = false">
+    <button class="drop-toggle btn flat" (click)="showDropDown=!showDropDown">
+      <span *ngIf="selected.length <= 0">Select</span>
+      <span *ngIf="selected.length>0">
+        <span *ngFor="let item of selected" class="drop-toggle__item">{{item[labelKey]}}</span>
+      </span>
+      <i class="fa fa-angle-down"></i>
+    </button>
+    <div class="drop-show" *ngIf="showDropDown">
+      <label *ngFor="let item of data">
+        <input
+          type="checkbox"
+          [(ngModel)]="item.checked"
+          (change)="updateSelection(item)"
+          [disabled]="canSelectItem(item)"
+        />
+        <span>{{item[labelKey]}}</span>
+      </label>
+    </div>
+  </div>
+</div>
