@@ -5,6 +5,9 @@
   [dataKey]="'id'"
   [labelKey]="'name'"
   [maxSelection]="3"
+  [groupBy]="'group'"
+  [groupLabels]="groupLabels"
+  onlyOneGroupSelectable="false"
   (shareCheckedList)="shareCheckedList($event)"
   (shareIndividualCheckedList)="shareIndividualCheckedList($event)"
 >

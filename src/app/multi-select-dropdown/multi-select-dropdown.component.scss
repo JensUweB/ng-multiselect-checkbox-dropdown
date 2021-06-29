@@ -1,50 +1,54 @@
 /***
-    css for multi select drop down
+    Scss for multi select drop down
 **/
-.drop-toggle {
-  background-color: #fff;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  border: 1px solid #ccc;
-  width: 233px;
-  text-align: left;
+.dropdown {
+    position: relative;
 
-  i {
-    float: right;
-  }
+    &__toggle {
+        background-color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        width: 233px;
+        text-align: left;
+    
+      i {
+        float: right;
+      }
+    
+      &--item {
+        display: inline-block;
+        background-color: #408bfc;
+        color: #fff;
+        padding: 2px 4px;
+        margin: 2px;
+        border-radius: 2px;
+      }
+    }
 
-  &__item {
-    background-color: #408bfc;
-    color: #fff;
-    padding: 2px 4px;
-    margin: 0 2px;
-    border-radius: 2px;
-  }
-}
-.drop-show {
-  padding: 4px;
-  width: 222px;
-  background-color: #fff;
-  border: 1px solid #bababa;
-  position: absolute;
-  z-index: 100;
-  -webkit-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-  margin-left: 1px;
-
-  label {
-    display: block;
-    font-size: 15px;
-    cursor: pointer;
-  }
-
-  label input {
-    vertical-align: top;
-  }
-
-  label span {
-    display: inline-block;
-  }
+    &__show {
+        position: absolute;
+        padding: 4px;
+        min-width: 222px;
+        background-color: #fff;
+        border: 1px solid #bababa;
+        z-index: 100;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        margin-left: 1px;
+      
+        label {
+          display: block;
+          font-size: 15px;
+          cursor: pointer;
+        }
+      
+        label input {
+          vertical-align: top;
+        }
+      
+        label span {
+          display: inline-block;
+        }
+      }
 }
