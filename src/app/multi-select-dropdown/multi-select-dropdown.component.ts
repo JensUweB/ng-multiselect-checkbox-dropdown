@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-multi-select-dropdown',
@@ -14,26 +14,43 @@ export class MultiSelectDropdownComponent implements OnInit {
   @Input() maxSelection = -1;
   @Input() onlyOneGroupSelectable = false;
   @Input() groupLabels: any;
+  @Input() placeholder = 'Bitte auswählen...';
+  @Input() disabled: boolean;
 
   @Output() shareSelected = new EventEmitter();
-  @Output() shareCurrentSelected = new EventEmitter();
 
   groups: string[] = [];
-  group: string;
+  group: string = null;
   showDropDown = false;
 
   constructor() {}
 
   ngOnInit() {
+    this.initGroups();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes) {
+      if (changes.data || changes.selected) {
+        this.initGroups();
+      }
+    }
+  }
+
+  initGroups() {
     if (this.groupBy) {
+      this.groups = [];
       this.data.forEach(item => {
         if (!this.groups.some(a => a === item[this.groupBy])) {
           this.groups.push(item[this.groupBy]);
-          if (!this.group) {
+          if (!this.group && item[this.groupBy]) {
             this.group = item[this.groupBy];
           }
         }
       });
+    }
+    if (this.selected && this.selected.length > 0) {
+      this.group = this.selected[0][this.groupBy];
     }
   }
 
@@ -54,11 +71,13 @@ export class MultiSelectDropdownComponent implements OnInit {
       this.maxSelection < 0 ||
       this.selected.length < this.maxSelection
     ) {
+      item.checked = true;
       this.selected.push(item);
       if (!this.group) {
         this.group = item[this.groupBy];
       }
     }
+    this.shareSelected.next(this.selected);
   }
 
   /**
@@ -66,21 +85,14 @@ export class MultiSelectDropdownComponent implements OnInit {
    */
   canSelectItem(item) {
     if (this.group && this.onlyOneGroupSelectable) {
-      return (
-        (item[this.groupBy] === this.group &&
-          (this.maxSelection > 0 &&
-            this.selected.length < this.maxSelection)) ||
-        this.isSelected(item) ||
-        this.maxSelection < 0
+      return ((item[this.groupBy] === this.group
+          && (this.maxSelection > 0 && this.selected.length < this.maxSelection ||  this.maxSelection < 0)) ||  this.isSelected(item)
       );
     }
     // TODO: fix
     // This second condition does not work properly
-    return (
-      (this.maxSelection > 0 && this.selected.length < this.maxSelection) ||
-      this.isSelected(item) ||
-      this.maxSelection < 0
-    );
+    return ((this.maxSelection > 0 && this.selected.length < this.maxSelection) ||
+      this.isSelected(item) || this.maxSelection < 0);
   }
 
   /**
